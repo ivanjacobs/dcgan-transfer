@@ -1,0 +1,1 @@
+data_dir = '/home/justin/sandbox/dcgan_code/cats'
