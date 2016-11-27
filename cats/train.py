@@ -8,6 +8,7 @@ import numpy as np
 from tqdm import tqdm
 from matplotlib import pyplot as plt
 from sklearn.externals import joblib
+from scipy import misc
 
 import theano
 import theano.tensor as T
@@ -54,8 +55,10 @@ n_transfer     = 6 # number of layers to transfer from pretrained model
 tr_data, te_data, tr_stream, val_stream, te_stream = cats(ntrain=ntrain)
 
 tr_handle = tr_data.open()
-vaX, = tr_data.get_data(tr_handle, slice(0, 10000))
-vaX = transform(vaX)
+#vaX, = tr_data.get_data(tr_handle, slice(0, 10000))
+directory = './rex_cat/'
+vaX = [misc.imread(os.path.join(directory, f)) for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f)) and (f.endswith('.jpg') or f.endswith('.jpeg'))]
+vaX = transform(vaX[0:10000]) #just use the 10,000 like in the orignal code
 
 desc = 'uncond_dcgan'
 model_dir = 'models/%s'%desc
