@@ -28,17 +28,8 @@ for i, img in enumerate(images):
 	file_path = join(image_dir, img)
 	description = ''
 
-	# uniformly at random select a random number of transformations to apply:
-	funct = [f for f in dir(aug) if isinstance(aug.__dict__.get(f), types.FunctionType)]
-	num_morph = random.randint(1, len(funct))
-	for n in range(0, num_morph):
-		aug.__dict__.get(funct[random.randint(0, len(funct))])(file_path).save('tmp.jpg')
-
-		with open('tmp.jpg', 'rb') as f: 
-			print file_path
-			description, score = inception.run_inference_on_image(f.read())
-			print description
-	break
+	with open(file_path, 'rb') as f: 
+		description, score = inception.run_inference_on_image(f.read())
 
 	if 'cat' not in description:
 		remove(file_path)
